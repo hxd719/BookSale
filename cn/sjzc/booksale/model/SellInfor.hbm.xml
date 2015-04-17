@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.sjzc.booksale.model.SellInfor" table="t_sellinfor" >
+		<id name="id">
+			<generator class="native"/>
+		</id>
+		<property name="price"></property>
+		<property name="description"></property>
+		<property name="publishTime"></property>
+		<property name="bookName"></property>
+		<many-to-one name="user" column="userid" ></many-to-one>
+		<many-to-one name="book" column="bookid" ></many-to-one>
+		<many-to-one name="category" column="categoryid" ></many-to-one>
+	</class>
+	
+</hibernate-mapping>

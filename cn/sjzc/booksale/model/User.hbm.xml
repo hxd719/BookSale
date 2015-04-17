@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.sjzc.booksale.model.User" table="t_user" >
+		<id name="id">
+			<generator class="native"/>
+		</id>
+		<property name="name"></property>
+		<property name="password"></property>
+		<property name="date"></property>
+		<property name="expired"></property>
+		<property name="sex"></property>
+		<property name="tel"></property>
+		<property name="token"></property>
+		
+	</class>
+	
+</hibernate-mapping>
