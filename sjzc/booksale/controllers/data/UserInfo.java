@@ -9,8 +9,6 @@ public class UserInfo {
 	private String tel;
 	private int sex;
 	private String token;
-	
-	
 	private Date expired;
 	private Date date;
 	
