@@ -2,8 +2,6 @@ package cn.sjzc.booksale.controllers.data;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import cn.sjzc.booksale.model.User;
 
 public class UserInfo {
@@ -11,9 +9,9 @@ public class UserInfo {
 	private String tel;
 	private int sex;
 	private String token;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	
+	
 	private Date expired;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date date;
 	
 	
