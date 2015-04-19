@@ -6,7 +6,7 @@ import cn.sjzc.booksale.model.User;
 
 public class UserInfo {
 	private String name;
-	private String tel;
+	private String phone;
 	private int sex;
 	private String token;
 	private Date expired;
@@ -22,7 +22,7 @@ public class UserInfo {
 		this.expired = u.getExpired();
 		this.token = u.getToken();
 		this.name = u.getName();
-		this.tel = u.getTel();
+		this.phone = u.getTel();
 		this.expired = u.getExpired();
 	}
 	public String getName() {
@@ -31,12 +31,15 @@ public class UserInfo {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getTel() {
-		return tel;
+	
+	public String getPhone() {
+		return phone;
 	}
-	public void setTel(String tel) {
-		this.tel = tel;
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
+
 	public int getSex() {
 		return sex;
 	}

@@ -12,9 +12,18 @@ public class SellInfor {
 	private int price;
 	private String description;
 	private Date publishTime;
+	private Date deadline;
 	
 	
 	
+	
+	
+	public Date getDeadline() {
+		return deadline;
+	}
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
+	}
 	public Category getCategory() {
 		return category;
 	}

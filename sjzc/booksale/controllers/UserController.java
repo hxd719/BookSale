@@ -40,7 +40,7 @@ public class UserController extends AbstractController {
 		}
 		Boolean code = false;
 		try {
-			code = checkCode("6b8daa048f78", commandInfo.phone, "86", commandInfo.code);
+			code = checkCode( commandInfo.phone, commandInfo.code);
 		} catch (Exception e) {
 			rep.resultTip = "服务器繁忙";
 			return rep;
@@ -97,7 +97,7 @@ public class UserController extends AbstractController {
 		}
 		Boolean code = false;
 		try {
-			code = checkCode("6b8daa048f78", commandInfo.phone, "86", commandInfo.code);
+			code = checkCode( commandInfo.phone, commandInfo.code);
 		} catch (Exception e) {
 			rep.resultTip = "服务器繁忙";
 			return rep;
@@ -136,8 +136,9 @@ public class UserController extends AbstractController {
 		return rep;
 	}
 	
-	public  Boolean checkCode(String appkey, String phone, String zone, String code) throws Exception {
-		
+	public  Boolean checkCode( String phone, String code) throws Exception {
+		String appkey = "6cc3d2a9d42c";
+		String zone = "86";
 		String address = "https://api.sms.mob.com/sms/verify";
 		MobClient client = null;
 		try {

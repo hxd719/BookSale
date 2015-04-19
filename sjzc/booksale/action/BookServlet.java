@@ -1,15 +1,23 @@
 package cn.sjzc.booksale.action;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.util.Streams;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -17,8 +25,6 @@ import cn.sjzc.booksale.utill.MD5;
 import cn.sjzc.booksale.utill.SdkRequest;
 import cn.sjzc.booksale.utill.SdkResponse;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class BookServlet extends HttpServlet {
@@ -34,20 +40,63 @@ public class BookServlet extends HttpServlet {
 			throws ServletException, IOException {
 		factor = WebApplicationContextUtils.getRequiredWebApplicationContext(getServletContext());
 		ObjectMapper objectMapper = new ObjectMapper(); // create once, reuse
-		objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
-		objectMapper.setSerializationInclusion(Include.NON_NULL);
 		SdkResponse rep = new SdkResponse();
-		String requestString = IOUtils.toString(request.getInputStream());
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		response.setCharacterEncoding("utf-8");
+		
+		boolean flag = ServletFileUpload.isMultipartContent(request);
+        InputStream is =null;
+        String requestString = null;
+        String name = null;
+        String dir = this.getServletContext().getRealPath("/upload");
+		File dirFile = new File(dir);
+		if (!dirFile.exists()) {
+			dirFile.mkdirs();
+		}
+		if (flag) {
+		    try {
+		        ServletFileUpload upload = new ServletFileUpload();
+		        FileItemIterator iter = upload.getItemIterator(request);
+		        while (iter.hasNext()){
+		            FileItemStream fis = iter.next();
+		            is = fis.openStream();
+		            if(fis.isFormField()){
+		                if(fis.getFieldName().equals("requestString")){
+		                	requestString = Streams.asString(is);
+		                }
+		            }else{
+		                String[] names = fis.getName().split(".");
+		                byte[] buff = new byte[1024];
+		                int len = 0;
+		                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		                while ((len=is.read(buff))>0){
+		                	bos.write(buff,0,len);
+		                }
+		                name = MD5.getMD5(new Date().toString())+"."+names[names.length-1];
+		                File f = new File(dirFile,name);
+		                FileOutputStream out = new FileOutputStream(f);
+		                bos.writeTo(out);
+		                bos.close();
+		            }
+		        }
+		    }catch (Exception e){
+		    	e.printStackTrace();
+		    } 
+	    }
+            
 		System.out.println(requestString);
 		String author = request.getHeader("MDAuthentication");
 		if(true || MD5.getMD5("book"+requestString+"sale").equals(author)){
 			SdkRequest req = objectMapper.readValue(requestString, SdkRequest.class);
+			req.url = "/upload/"+name;
 			rep = dispatch(request,req);
 		} else {
 			rep.resultTip = "请求不合法";
 		}
 		String repsonseString =  objectMapper.writeValueAsString(rep);
-		response.setContentType("application/json;charset=UTF-8");
+		System.out.println(repsonseString);
+		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
 		out.write(repsonseString);
 		out.flush();

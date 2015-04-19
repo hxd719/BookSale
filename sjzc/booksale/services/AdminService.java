@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import cn.sjzc.booksale.dao.AdminDao;
 import cn.sjzc.booksale.model.Admin;
 
-@Service("adminservice")
+@Service("AdminService")
 public class AdminService {
 	@Resource
 	private AdminDao dao;

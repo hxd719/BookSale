@@ -9,6 +9,18 @@ public class BuyInfor {
 	private String content;
 	private String name;
 	private Date publishTime;
+	private Date deadline;
+	
+	
+	
+	
+	
+	public Date getDeadline() {
+		return deadline;
+	}
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
+	}
 	public int getId() {
 		return id;
 	}
