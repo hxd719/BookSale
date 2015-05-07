@@ -4,7 +4,7 @@ import java.util.List;
 
 public class PagerVO {
 	private int total;
-	private List<Object> datas;
+	private List<?> datas;
 	
 	public int getTotal() {
 		return total;
@@ -12,10 +12,10 @@ public class PagerVO {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-	public List<Object> getDatas() {
+	public List<?> getDatas() {
 		return datas;
 	}
-	public void setDatas(List<Object> datas) {
+	public void setDatas(List<?> datas) {
 		this.datas = datas;
 	}
 }

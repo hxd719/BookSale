@@ -55,6 +55,7 @@ public class GetBookFromD {
 	private static ObjectMapper mapper = new ObjectMapper();
 	
 	//将字符转换成Book
+	@SuppressWarnings("unchecked")
 	public static Book turnOver(String s) {
 		Map<String, Object> map = null;
 		try {

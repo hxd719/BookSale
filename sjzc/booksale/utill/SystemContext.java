@@ -1,8 +1,11 @@
 package cn.sjzc.booksale.utill;
 
+
 public class SystemContext {
-	private static ThreadLocal offset = new ThreadLocal();
-	private static ThreadLocal pagesize = new ThreadLocal();
+	private static ThreadLocal<Integer> offset = new ThreadLocal<Integer>();
+	
+	
+	private static ThreadLocal<Integer> pagesize = new ThreadLocal<Integer>();
 	
 	public static void setOffset(int _offset){
 		offset.set(_offset);

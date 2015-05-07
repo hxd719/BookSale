@@ -29,11 +29,12 @@ public class BookService {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public Book getBookByISBN(String ISBN) {
 		Book b = null;
 		Book book = new Book();
 		book.setISBN(ISBN);
-		List<Book> books = dao.find(book);
+		List<Book> books = (List<Book>)dao.find(book);
 		if(!books.isEmpty()) {
 			return books.get(0);
 		} else {

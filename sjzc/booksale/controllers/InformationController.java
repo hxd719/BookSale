@@ -1,61 +1,33 @@
 package cn.sjzc.booksale.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
-import cn.sjzc.booksale.controllers.commandinfo.UserCommandInfo;
-import cn.sjzc.booksale.controllers.data.UserInfo;
-import cn.sjzc.booksale.model.User;
-import cn.sjzc.booksale.services.UserService;
+import cn.sjzc.booksale.model.BuyInfor;
+import cn.sjzc.booksale.services.InformationService;
 import cn.sjzc.booksale.utill.SdkRequest;
 import cn.sjzc.booksale.utill.SdkResponse;
 @Controller("InformationController")
 public class InformationController extends AbstractController {
 	
 	@Resource
-	private UserService service;
+	private InformationService service;
 	
 	
 	public SdkResponse add(SdkRequest req) throws IOException	{
 		SdkResponse rep = new SdkResponse();
-		UserCommandInfo commandInfo = null;
-		try {
-			commandInfo = getCommandInfo(req.commandInfo, UserCommandInfo.class);
-		} catch (Exception e) {
-			rep.resultTip = "数据非法";
-			return rep;
+		List<BuyInfor> list = service.getBuyInfoList(1, 10, 1, null);
+		for (BuyInfor buyInfor : list) {
+			System.out.println(buyInfor.getName()+buyInfor.getCategory().getName());
 		}
-		if(commandInfo.code == null || commandInfo.name == null || commandInfo.password == null || commandInfo.phone == null) {
-			rep.resultTip = "数据非法";
-			return rep;
-		}
-		User u1 = service.getUserByPhone(commandInfo.phone);
-		if(u1 != null) {
-			rep.resultTip = "该号码已被注册";
-			return rep;
-		}
-		Boolean code = false;
-		try {
-		} catch (Exception e) {
-			rep.resultTip = "服务器繁忙";
-			return rep;
-		}
-		if(code) {
-			User  u = service.addUser(commandInfo);
-			rep.responseData = new UserInfo(u);
-			
-		} else {
-			rep.resultTip = "验证码错误";
-			return rep;
-		}
-
 		return rep;
 	}
 	
-	
+	/*
 	public SdkResponse update(SdkRequest req) throws IOException	{
 		SdkResponse rep = new SdkResponse();
 		UserCommandInfo commandInfo = null;
@@ -180,6 +152,6 @@ public class InformationController extends AbstractController {
 	}
 	
 	
-
+*/
 
 }

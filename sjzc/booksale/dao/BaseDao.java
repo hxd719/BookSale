@@ -31,15 +31,17 @@ public class BaseDao {
 		getSession().delete(entity);
 	}
 
-	public List find(Object entity) {
+	public List<?> find(Object entity) {
 		return getSession().createCriteria(entity.getClass()).add(
 				Example.create(entity)).list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> List<T> findAll(Class<T> entityClass) {
 		return getSession().createCriteria(entityClass).list();
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> T findById(Class<T> entityClass, int id) {
 		return (T) getSession().get(entityClass, id);
 	}
@@ -83,7 +85,7 @@ public class BaseDao {
 		}
 		query.setFirstResult(offset);
 		query.setMaxResults(pagesize);
-		List datas = query.list();
+		List<?> datas = query.list();
 
 		PagerVO pv = new PagerVO();
 		pv.setDatas(datas);

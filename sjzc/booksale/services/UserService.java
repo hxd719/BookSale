@@ -78,10 +78,11 @@ public class UserService {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public User getUserByPhone(String phone) {
 		User u = new User();
 		u.setTel(phone);
-		List<User> users = dao.find(u);
+		List<User> users = (List<User>)dao.find(u);
 		if(!users.isEmpty()) {
 			return users.get(0);
 		} else {
@@ -89,10 +90,11 @@ public class UserService {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public User getUserByToken(String token) {
 		User u = new User();
 		u.setToken(token);
-		List<User> users = dao.find(u);
+		List<User> users = (List<User>)dao.find(u);
 		if(!users.isEmpty()) {
 			return users.get(0);
 		} else {

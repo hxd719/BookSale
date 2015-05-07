@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import cn.sjzc.booksale.model.Admin;
 
-@Repository("admindao")
+@Repository("AdminDao")
 public class AdminDao extends BaseDao {
 	
 	

@@ -1,7 +1,7 @@
 package cn.sjzc.booksale.dao;
 
 import org.springframework.stereotype.Repository;
-@Repository("bookdao")
+@Repository("BookDao")
 public class BookDao extends BaseDao{
 
 	
