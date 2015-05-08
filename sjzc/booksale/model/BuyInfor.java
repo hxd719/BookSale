@@ -7,14 +7,21 @@ public class BuyInfor {
 	private User user;
 	private Category category;
 	private String content;
-	private String name;
+	private String bookName;
 	private Date publishTime;
 	private Date deadline;
+	private Book book;
 	
 	
 	
 	
 	
+	public Book getBook() {
+		return book;
+	}
+	public void setBook(Book book) {
+		this.book = book;
+	}
 	public Date getDeadline() {
 		return deadline;
 	}
@@ -39,12 +46,6 @@ public class BuyInfor {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public Date getPublishTime() {
 		return publishTime;
 	}
@@ -56,6 +57,12 @@ public class BuyInfor {
 	}
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+	public String getBookName() {
+		return bookName;
+	}
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
 	}
 	
 	

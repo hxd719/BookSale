@@ -19,6 +19,7 @@ public class BaseDao {
 	
 	public void save(Object entity) {
 		getSession().save(entity);
+		getSession().flush();
 	}
 
 	public void update(Object entity) {

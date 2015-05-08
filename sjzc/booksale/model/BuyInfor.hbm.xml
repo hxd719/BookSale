@@ -12,6 +12,7 @@
 		<property name="publishTime"></property>
 		<property name="deadline"></property>
 		<many-to-one name="user" column="userid" lazy="false" ></many-to-one>
+		<many-to-one name="book" column="bookid" lazy="false" ></many-to-one>
 		<many-to-one name="category" column="categoryid" lazy="false"></many-to-one>
 	</class>
 	

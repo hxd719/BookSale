@@ -21,4 +21,9 @@ public class CategoryService {
 	}
 
 
+	public Category getCategoryById(Integer id) {
+		
+		
+		 return dao.findById(Category.class, id);
+	}
 }

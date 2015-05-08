@@ -7,8 +7,11 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
+import cn.sjzc.booksale.controllers.commandinfo.InformationCommandInfo;
 import cn.sjzc.booksale.model.BuyInfor;
+import cn.sjzc.booksale.model.User;
 import cn.sjzc.booksale.services.InformationService;
+import cn.sjzc.booksale.services.UserService;
 import cn.sjzc.booksale.utill.SdkRequest;
 import cn.sjzc.booksale.utill.SdkResponse;
 @Controller("InformationController")
@@ -18,12 +21,32 @@ public class InformationController extends AbstractController {
 	private InformationService service;
 	
 	
+	@Resource
+	private UserService userService;
+	
+	
 	public SdkResponse add(SdkRequest req) throws IOException	{
 		SdkResponse rep = new SdkResponse();
-		List<BuyInfor> list = service.getBuyInfoList(1, 10, 1, null);
-		for (BuyInfor buyInfor : list) {
-			System.out.println(buyInfor.getName()+buyInfor.getCategory().getName());
+		InformationCommandInfo commandInfo = null;
+		try {
+			commandInfo = getCommandInfo(req.commandInfo, InformationCommandInfo.class);
+		} catch (Exception e) {
+			rep.resultTip = "数据非法";
+			return rep;
 		}
+		
+		User u = userService.getUserByToken(req.token);
+		if(u == null) {
+			rep.resultTip = "请登录";
+			return rep;
+		}
+		
+		if(commandInfo.isSell) {
+			service.addSellInfor(u,commandInfo);
+		} else {
+			service.addBuyInfor(u,commandInfo);
+		}
+		
 		return rep;
 	}
 	

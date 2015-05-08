@@ -58,7 +58,9 @@ public class BookService {
 	}
 	
 	
-	
+	public Book getBookById(Integer id) {
+		return dao.findById(Book.class, id);
+	}
 	
 	
 

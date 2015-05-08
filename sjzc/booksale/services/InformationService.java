@@ -1,15 +1,19 @@
 package cn.sjzc.booksale.services;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import cn.sjzc.booksale.controllers.commandinfo.InformationCommandInfo;
 import cn.sjzc.booksale.dao.BuyInforDao;
 import cn.sjzc.booksale.dao.SellInforDao;
+import cn.sjzc.booksale.model.Book;
 import cn.sjzc.booksale.model.BuyInfor;
 import cn.sjzc.booksale.model.SellInfor;
+import cn.sjzc.booksale.model.User;
 import cn.sjzc.booksale.utill.PagerVO;
 @Service("InformationService")
 public class InformationService {
@@ -21,6 +25,12 @@ public class InformationService {
 	private SellInforDao sdao;
 
 
+	@Resource
+	private BookService bookService;
+	
+	
+	@Resource
+	private CategoryService categoryService;
 
 	@SuppressWarnings("unchecked")
 	public List<BuyInfor> getBuyInfoList(Integer categoryId,Integer pageSize,Integer pageNum,String searchKey) {
@@ -79,14 +89,29 @@ public class InformationService {
 		return list;
 	}
 	
-	public int addBuyInfor() {
+	public int addBuyInfor(User u, InformationCommandInfo commandinfo) {
+		BuyInfor info = new BuyInfor();
+		Date time = new Date();
+		info.setBookName(commandinfo.bookName);
+		info.setCategory(categoryService.getCategoryById(commandinfo.categoryId));
+		info.setContent(commandinfo.content);
+		info.setPublishTime(time);
+		info.setUser(u);
+		info.setDeadline(new Date(time.getTime()+1296000000));
 		
+		if(commandinfo.bookId != null) {
+			Book b = bookService.getBookById(commandinfo.bookId);
+			info.setBook(b);
+			info.setBookName(b.getName());
+		}
 		
-		return 0;
+		bdao.save(info);
+		
+		return info.getId();
 	}
 	
 	
-	public int addSellInfor() {
+	public int addSellInfor(User u,InformationCommandInfo commandinfo) {
 		
 		
 		return 0;
