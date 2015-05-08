@@ -49,6 +49,48 @@ public class InformationService {
 		}
 		return list;
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<BuyInfor> getBuyInfoListByUserId(Integer userId,Integer pageSize,Integer pageNum,String searchKey) {
+		List<BuyInfor> list = null;
+		PagerVO data = null;
+		if(searchKey != null) {
+			String sql ="select b from BuyInfo b , User u  where  u.id=? and b.name like ? order by b.publishTime desc";
+			data = bdao.findPaginated(sql,new Object[]{userId,"%"+searchKey+"%"} ,(pageNum-1)*pageSize, pageSize);
+		} else {
+			String sql ="select b from BuyInfor b , User u  where u.id = ? order by b.publishTime desc";
+			data = bdao.findPaginated(sql,userId, (pageNum-1)*pageSize, pageSize);
+			list = (List<BuyInfor>) data.getDatas();
+		}
+		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SellInfor> getSellInfoListByUserId(Integer userId,Integer pageSize,Integer pageNum,String searchKey) {
+		List<SellInfor> list = null;
+		if(searchKey != null) {
+			String sql ="select b from SellInfor b, User u   where  u.id=? and b.bookName like ? order by b.publishTime desc";
+			list = (List<SellInfor>)sdao.findPaginated(sql,new Object[]{userId,"%"+searchKey+"%"}, (pageNum-1)*pageSize, pageSize);
+		} else {
+			String sql ="select b from SellInfor b, User u   where  u.id=? order by b.publishTime desc";
+			list = (List<SellInfor>)sdao.findPaginated(sql,userId ,(pageNum-1)*pageSize, pageSize);
+		}
+		return list;
+	}
+	
+	public int addBuyInfor() {
+		
+		
+		return 0;
+	}
+	
+	
+	public int addSellInfor() {
+		
+		
+		return 0;
+	}
 
 
 }
