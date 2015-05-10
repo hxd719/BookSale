@@ -7,7 +7,7 @@
 		<id name="id">
 			<generator class="native"/>
 		</id>
-		<property name="name"></property>
+		<property name="bookName"></property>
 		<property name="content"></property>
 		<property name="publishTime"></property>
 		<property name="deadline"></property>

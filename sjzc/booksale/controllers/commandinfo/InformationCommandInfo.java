@@ -7,4 +7,5 @@ public class InformationCommandInfo extends Page {
 	public Integer bookId;
 	public Integer price;
 	public Boolean isSell;
+	public Integer id;
 }

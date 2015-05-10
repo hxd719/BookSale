@@ -3,11 +3,11 @@ package cn.sjzc.booksale.model;
 import java.util.Date;
 
 public class User {
-	private int id;
+	private Integer id;
 	private String name;
 	private String password;
 	private String tel;
-	private int sex;
+	private Integer sex;
 	private String token;
 	private Date expired;
 	private Date date;
@@ -20,10 +20,10 @@ public class User {
 	public void setExpired(Date expired) {
 		this.expired = expired;
 	}
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -47,7 +47,7 @@ public class User {
 	public int getSex() {
 		return sex;
 	}
-	public void setSex(int sex) {
+	public void setSex(Integer sex) {
 		this.sex = sex;
 	}
 	public String getToken() {

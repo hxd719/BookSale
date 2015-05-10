@@ -1,14 +1,12 @@
 package cn.sjzc.booksale.controllers;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
 import cn.sjzc.booksale.controllers.commandinfo.InformationCommandInfo;
-import cn.sjzc.booksale.model.BuyInfor;
 import cn.sjzc.booksale.model.User;
 import cn.sjzc.booksale.services.InformationService;
 import cn.sjzc.booksale.services.UserService;
@@ -46,7 +44,7 @@ public class InformationController extends AbstractController {
 		} else {
 			service.addBuyInfor(u,commandInfo);
 		}
-		
+		rep.resultTip = "ok";
 		return rep;
 	}
 	

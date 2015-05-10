@@ -9,7 +9,7 @@ public class SellInfor {
 	private Book book;
 	private String bookName;
 	private Category category;
-	private int price;
+	private Integer price;
 	private String description;
 	private Date publishTime;
 	private Date deadline;

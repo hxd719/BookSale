@@ -112,9 +112,19 @@ public class InformationService {
 	
 	
 	public int addSellInfor(User u,InformationCommandInfo commandinfo) {
-		
-		
-		return 0;
+		SellInfor info = new SellInfor();
+		Date time = new Date();
+		Book b = bookService.getBookById(commandinfo.bookId);
+		info.setBook(b);
+		info.setBookName(b.getName());
+		info.setCategory(categoryService.getCategoryById(commandinfo.categoryId));
+		info.setPublishTime(time);
+		info.setDeadline(new Date(time.getTime()+1296000000));
+		info.setPrice(commandinfo.price);
+		info.setUser(u);
+		info.setDescription(commandinfo.content);
+		sdao.save(info);
+		return info.getId();
 	}
 
 
