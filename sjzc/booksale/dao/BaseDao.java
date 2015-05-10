@@ -16,7 +16,6 @@ public class BaseDao {
 	private SessionFactory sessionFactory;
 	
 	
-	
 	public void save(Object entity) {
 		getSession().save(entity);
 		getSession().flush();

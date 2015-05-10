@@ -126,6 +126,67 @@ public class InformationService {
 		sdao.save(info);
 		return info.getId();
 	}
+	
+	
+	public int updateBuyInfor(InformationCommandInfo commandinfo) {
+		BuyInfor info = bdao.findById(BuyInfor.class, commandinfo.id);
+		Date time = new Date();
+		if(commandinfo.bookName != null) {
+			info.setBookName(commandinfo.bookName);
+		}
+		if(commandinfo.categoryId != null) {
+			info.setCategory(categoryService.getCategoryById(commandinfo.categoryId));
+		}
+		
+		if(commandinfo.content != null) {
+			info.setContent(commandinfo.content);
+		}
+		info.setDeadline(new Date(time.getTime()+1296000000));
+		if(commandinfo.bookId != null) {
+			Book b = bookService.getBookById(commandinfo.bookId);
+			info.setBook(b);
+			info.setBookName(b.getName());
+		}
+		
+		bdao.update(info);
+		return info.getId();
+	}
+	
+	public int updateSellInfor(User u, InformationCommandInfo commandinfo) {
+		SellInfor info = sdao.findById(SellInfor.class, commandinfo.id);
+		Date time = new Date();
+		if(commandinfo.bookId != null) {
+			Book b = bookService.getBookById(commandinfo.bookId);
+			info.setBook(b);
+			info.setBookName(b.getName());
+		}
+		if(commandinfo.categoryId != null) {
+			info.setCategory(categoryService.getCategoryById(commandinfo.categoryId));
+		}
+		
+		if(commandinfo.price != null) {
+			info.setPrice(commandinfo.price);
+		}
+		if(commandinfo.content != null) {
+			info.setDescription(commandinfo.content);
+		}
+		info.setDeadline(new Date(time.getTime()+1296000000));
+		sdao.update(info);
+		return info.getId();
+	}
+	
+	
+	public void deleteBuyInfor(InformationCommandInfo commandinfo) {
+		BuyInfor info = new BuyInfor();
+		info.setId(commandinfo.id);
+		bdao.del(info);
+	}
+	
+	public void deleteSellInfor(InformationCommandInfo commandinfo) {
+		SellInfor info = new SellInfor();
+		info.setId(commandinfo.id);
+		sdao.del(info);
+	}
 
 
 }
