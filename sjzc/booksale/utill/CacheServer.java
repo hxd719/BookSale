@@ -11,10 +11,10 @@ public class CacheServer {
 
 	public static MemcachedClient getCacheClient() {
 
-		final String host = "473a67a0cd3f41e1.m.cnbjalicm12pub001.ocs.aliyuncs.com";// 控制台上的“内网地址”
+		final String host = "";// 控制台上的“内网地址”
 		final String port = "11211"; // 默认端口 11211，不用改
-		final String username = "473a67a0cd3f41e1";// 控制台上的“访问账号“
-		final String password = "Hxd1823318";// 邮件或短信中提供的“密码”
+		final String username = "";// 控制台上的“访问账号“
+		final String password = "";// 邮件或短信中提供的“密码”
 
 		MemcachedClient cache = null;
 		try {
