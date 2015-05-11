@@ -40,6 +40,9 @@ public class UserService {
 	public User login(UserCommandInfo commandInfo) {
 		User user = getUserByPhone(commandInfo.phone);
 		String password = MD5.getMD5(commandInfo.password);
+		if(user == null) {
+			return null;
+		}
 		if(user.getPassword().equals(password)) {
 			user.setExpired(new Date());
 			if(user.getToken() == null) {

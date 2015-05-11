@@ -53,7 +53,6 @@ public class UserController extends AbstractController {
 			rep.resultTip = "验证码错误";
 			return rep;
 		}
-		rep.resultTip = "ok";
 		return rep;
 	}
 	
@@ -78,7 +77,6 @@ public class UserController extends AbstractController {
 		} else {
 			rep.resultTip = "用户名或密码不正确";
 		}
-		rep.resultTip = "ok";
 		return rep;
 	}
 	
@@ -111,7 +109,6 @@ public class UserController extends AbstractController {
 			rep.resultTip = "验证码错误";
 			return rep;
 		}
-		rep.resultTip = "ok";
 		return rep;
 	}
 	
@@ -135,7 +132,6 @@ public class UserController extends AbstractController {
 		} else {
 			rep.resultTip = "原密码不正确";
 		}
-		rep.resultTip = "ok";
 		return rep;
 	}
 	

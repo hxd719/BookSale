@@ -44,7 +44,7 @@ public class User {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	public int getSex() {
+	public Integer getSex() {
 		return sex;
 	}
 	public void setSex(Integer sex) {

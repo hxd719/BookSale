@@ -38,7 +38,6 @@ public class BookController extends AbstractController {
 			return rep;
 		}
 		rep.responseData = new BookInfo(book);
-		rep.resultTip = "ok";
 		return rep;
 	}
 	

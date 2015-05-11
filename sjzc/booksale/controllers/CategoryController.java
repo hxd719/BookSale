@@ -18,7 +18,6 @@ public class CategoryController extends AbstractController {
 	public SdkResponse list(SdkRequest req) throws IOException {
 		SdkResponse rep = new SdkResponse();
 		rep.responseData = service.getCategorise();
-		rep.resultTip = "ok";
 		return rep;
 	}
 

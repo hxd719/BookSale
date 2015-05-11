@@ -44,7 +44,6 @@ public class InformationController extends AbstractController {
 		} else {
 			service.addBuyInfor(u,commandInfo);
 		}
-		rep.resultTip = "ok";
 		return rep;
 	}
 	
