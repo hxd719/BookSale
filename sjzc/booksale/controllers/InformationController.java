@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import cn.sjzc.booksale.controllers.commandinfo.InformationCommandInfo;
+import cn.sjzc.booksale.model.BuyInfor;
+import cn.sjzc.booksale.model.SellInfor;
 import cn.sjzc.booksale.model.User;
 import cn.sjzc.booksale.services.InformationService;
 import cn.sjzc.booksale.services.UserService;
@@ -28,6 +30,10 @@ public class InformationController extends AbstractController {
 		InformationCommandInfo commandInfo = null;
 		try {
 			commandInfo = getCommandInfo(req.commandInfo, InformationCommandInfo.class);
+			if(commandInfo.categoryId == null || commandInfo.content == null ) {
+				rep.resultTip = "缺少重要数据";
+				return rep;
+			}
 		} catch (Exception e) {
 			rep.resultTip = "数据非法";
 			return rep;
@@ -47,26 +53,39 @@ public class InformationController extends AbstractController {
 		return rep;
 	}
 	
-	/*
+	
 	public SdkResponse update(SdkRequest req) throws IOException	{
 		SdkResponse rep = new SdkResponse();
-		UserCommandInfo commandInfo = null;
+		InformationCommandInfo commandInfo = null;
 		try {
-			commandInfo = getCommandInfo(req.commandInfo, UserCommandInfo.class);
+			commandInfo = getCommandInfo(req.commandInfo, InformationCommandInfo.class);
+			if(commandInfo.id == null) {
+				rep.resultTip = "缺少重要数据";
+				return rep;
+			}
 		} catch (Exception e) {
 			rep.resultTip = "数据非法";
 			return rep;
 		}
-		if( commandInfo.password == null || commandInfo.phone == null) {
-			rep.resultTip = "数据非法";
+		User u = userService.getUserByToken(req.token);
+		if(u == null) {
+			rep.resultTip = "请登录";
 			return rep;
 		}
-		User u = service.login(commandInfo);
-		if(u != null) {
-			rep.responseData = new UserInfo(u);
-			return rep;
+		if(commandInfo.isSell){
+			SellInfor sellInfo = service.getSellInfor(commandInfo.id);
+			if(!sellInfo.getUser().getId().equals(u.getId())) {
+				rep.resultTip = "非法操作";
+				return rep;
+			}
+			service.updateSellInfor(commandInfo);
 		} else {
-			rep.resultTip = "用户名或密码不正确";
+			BuyInfor buyInfo = service.getBuyInfo(commandInfo.id);
+			if(!buyInfo.getUser().getId().equals(u.getId())) {
+				rep.resultTip = "非法操作";
+				return rep;
+			}
+			service.updateBuyInfor(commandInfo);
 		}
 		return rep;
 	}
@@ -74,39 +93,46 @@ public class InformationController extends AbstractController {
 	
 	public SdkResponse delete(SdkRequest req) throws IOException	{
 		SdkResponse rep = new SdkResponse();
-		UserCommandInfo commandInfo = null;
+		InformationCommandInfo commandInfo = null;
 		try {
-			commandInfo = getCommandInfo(req.commandInfo, UserCommandInfo.class);
+			commandInfo = getCommandInfo(req.commandInfo, InformationCommandInfo.class);
+			if(commandInfo.id == null) {
+				rep.resultTip = "缺少重要数据";
+				return rep;
+			}
 		} catch (Exception e) {
 			rep.resultTip = "数据非法";
 			return rep;
 		}
-		if( commandInfo.newPassword == null || commandInfo.phone == null || commandInfo.code == null) {
-			rep.resultTip = "数据非法";
+		User u = userService.getUserByToken(req.token);
+		if(u == null) {
+			rep.resultTip = "请登录";
 			return rep;
 		}
-		Boolean code = false;
-		try {
-		} catch (Exception e) {
-			rep.resultTip = "服务器繁忙";
-			return rep;
-		}
-		
-		if(code) {
-			User  u = service.forgetPassword(commandInfo);
-			rep.responseData = new UserInfo(u);
+		if(commandInfo.isSell){
+			SellInfor sellInfo = service.getSellInfor(commandInfo.id);
+			if(!sellInfo.getUser().getId().equals(u.getId())) {
+				rep.resultTip = "非法操作";
+				return rep;
+			}
+			service.deleteSellInfor(commandInfo);
 		} else {
-			rep.resultTip = "验证码错误";
-			return rep;
+			BuyInfor buyInfo = service.getBuyInfo(commandInfo.id);
+			if(!buyInfo.getUser().getId().equals(u.getId())) {
+				rep.resultTip = "非法操作";
+				return rep;
+			}
+			service.deleteSellInfor(commandInfo);
 		}
 		return rep;
 	}
 	
+	/*
 	public SdkResponse search(SdkRequest req) throws IOException	{
 		SdkResponse rep = new SdkResponse();
-		UserCommandInfo commandInfo = null;
+		InformationCommandInfo commandInfo = null;
 		try {
-			commandInfo = getCommandInfo(req.commandInfo, UserCommandInfo.class);
+			commandInfo = getCommandInfo(req.commandInfo, InformationCommandInfo.class);
 		} catch (Exception e) {
 			rep.resultTip = "数据非法";
 			return rep;
@@ -124,6 +150,8 @@ public class InformationController extends AbstractController {
 		}
 		return rep;
 	}
+	
+	
 	
 	public SdkResponse list(SdkRequest req) throws IOException	{
 		SdkResponse rep = new SdkResponse();

@@ -127,6 +127,13 @@ public class InformationService {
 		return info.getId();
 	}
 	
+	public BuyInfor getBuyInfo(Integer id) {
+		return bdao.findById(BuyInfor.class, id);
+	}
+	
+	public SellInfor getSellInfor(Integer id) {
+		return sdao.findById(SellInfor.class, id);
+	}
 	
 	public int updateBuyInfor(InformationCommandInfo commandinfo) {
 		BuyInfor info = bdao.findById(BuyInfor.class, commandinfo.id);
@@ -152,7 +159,7 @@ public class InformationService {
 		return info.getId();
 	}
 	
-	public int updateSellInfor(User u, InformationCommandInfo commandinfo) {
+	public int updateSellInfor( InformationCommandInfo commandinfo) {
 		SellInfor info = sdao.findById(SellInfor.class, commandinfo.id);
 		Date time = new Date();
 		if(commandinfo.bookId != null) {
