@@ -8,4 +8,5 @@ public class SdkRequest {
 	public String token = null;
 	public Map<String, Object> commandInfo;
 	public String url;
+	public Long lastRequestTime;
 }

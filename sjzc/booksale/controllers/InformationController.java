@@ -1,6 +1,7 @@
 package cn.sjzc.booksale.controllers;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import cn.sjzc.booksale.model.SellInfor;
 import cn.sjzc.booksale.model.User;
 import cn.sjzc.booksale.services.InformationService;
 import cn.sjzc.booksale.services.UserService;
+import cn.sjzc.booksale.utill.NewInfo;
 import cn.sjzc.booksale.utill.SdkRequest;
 import cn.sjzc.booksale.utill.SdkResponse;
 @Controller("InformationController")
@@ -45,11 +47,14 @@ public class InformationController extends AbstractController {
 			rep.resultTip = "请登录";
 			return rep;
 		}
-		
+		Integer id = null;
 		if(commandInfo.isSell) {
-			service.addSellInfor(u,commandInfo);
+			id = service.addSellInfor(u,commandInfo);
 		} else {
-			service.addBuyInfor(u,commandInfo);
+			id = service.addBuyInfor(u,commandInfo);
+		}
+		if(id > 0) {
+			NewInfo.time = new Date().getTime();
 		}
 		return rep;
 	}
@@ -185,32 +190,5 @@ public class InformationController extends AbstractController {
 	
 	
 	
-	/*
-	
-	public SdkResponse getUnRead(SdkRequest req) throws IOException	{
-		SdkResponse rep = new SdkResponse();
-		UserCommandInfo commandInfo = null;
-		try {
-			commandInfo = getCommandInfo(req.commandInfo, UserCommandInfo.class);
-		} catch (Exception e) {
-			rep.resultTip = "数据非法";
-			return rep;
-		}
-		if( commandInfo.password == null || commandInfo.phone == null) {
-			rep.resultTip = "数据非法";
-			return rep;
-		}
-		User u = service.updateUser(commandInfo);
-		if(u != null) {
-			rep.responseData = new UserInfo(u);
-			return rep;
-		} else {
-			rep.resultTip = "原密码不正确";
-		}
-		return rep;
-	}
-	
-	
-*/
 
 }

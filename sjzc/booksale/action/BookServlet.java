@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,9 +23,9 @@ import org.apache.commons.fileupload.util.Streams;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import cn.sjzc.booksale.model.User;
-import cn.sjzc.booksale.services.UserService;
+import cn.sjzc.booksale.utill.CacheClientPool;
 import cn.sjzc.booksale.utill.MD5;
+import cn.sjzc.booksale.utill.NewInfo;
 import cn.sjzc.booksale.utill.SdkRequest;
 import cn.sjzc.booksale.utill.SdkResponse;
 
@@ -93,12 +95,14 @@ public class BookServlet extends HttpServlet {
 			SdkRequest req = objectMapper.readValue(requestString, SdkRequest.class);
 			req.url = "/upload/"+name;
 			rep = dispatch(request,req);
-//			if(req.token != null&&!req.token.equals("")) {
-//				UserService us = (UserService)factor.getBean("UserService");
-//				User u = us.getUserByToken(req.token);
-//				if(u !=null) {
-//					
-//				}
+//			Map<String, Object> data = new HashMap<String, Object>();
+//			try{
+//				Integer id = Integer.valueOf(req.token.split("\\|")[0]);
+//				data.put("newMesssage", CacheClientPool.getClient().get(id.toString()));
+//			}catch(Exception e) {
+//			}
+//			if(req.lastRequestTime < NewInfo.time){
+//				data.put("newInfo", true);
 //			}
 		} else {
 			rep.resultTip = "请求不合法";

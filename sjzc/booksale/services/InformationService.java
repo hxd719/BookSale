@@ -89,7 +89,7 @@ public class InformationService {
 		return list;
 	}
 	
-	public int addBuyInfor(User u, InformationCommandInfo commandinfo) {
+	public Integer addBuyInfor(User u, InformationCommandInfo commandinfo) {
 		BuyInfor info = new BuyInfor();
 		Date time = new Date();
 		info.setBookName(commandinfo.bookName);
@@ -111,7 +111,7 @@ public class InformationService {
 	}
 	
 	
-	public int addSellInfor(User u,InformationCommandInfo commandinfo) {
+	public Integer addSellInfor(User u,InformationCommandInfo commandinfo) {
 		SellInfor info = new SellInfor();
 		Date time = new Date();
 		info.setBookName(commandinfo.bookName);

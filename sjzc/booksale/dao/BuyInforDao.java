@@ -5,6 +5,5 @@ import org.springframework.stereotype.Repository;
 @Repository("BuyInforDao")
 public class BuyInforDao extends BaseDao {
 	
-	
 
 }
