@@ -72,7 +72,7 @@ public class GetBookFromD {
 			e.printStackTrace();
 		}
 		Book book = new Book();
-		String name = map.get("subtitle").toString();
+		String name = map.get("title").toString();
 		if(name == null) {
 			return null;
 		}
@@ -80,6 +80,7 @@ public class GetBookFromD {
 		String coverURL = map.get("image").toString();
 		String press = map.get("publisher").toString();
 		if(!author.isEmpty()) {
+			book.setAuthor("");
 			for (String string : author) {
 				book.setAuthor(book.getAuthor()+string);
 			}
