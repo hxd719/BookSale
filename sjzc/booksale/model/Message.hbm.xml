@@ -9,9 +9,8 @@
 		</id>
 		<property name="time"></property>
 		<property name="state"></property>
-		<many-to-one name="user" column="userid" lazy="false" ></many-to-one>
+		<property name="userId"></property>
 		<many-to-one name="sellInfo" column="sid" lazy="false" ></many-to-one>
-		<many-to-one name="buyInfo" column="bid" lazy="false" ></many-to-one>
 	</class>
 	
 </hibernate-mapping>

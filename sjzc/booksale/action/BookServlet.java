@@ -21,6 +21,8 @@ import org.apache.commons.fileupload.util.Streams;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import cn.sjzc.booksale.model.User;
+import cn.sjzc.booksale.services.UserService;
 import cn.sjzc.booksale.utill.MD5;
 import cn.sjzc.booksale.utill.SdkRequest;
 import cn.sjzc.booksale.utill.SdkResponse;
@@ -91,9 +93,19 @@ public class BookServlet extends HttpServlet {
 			SdkRequest req = objectMapper.readValue(requestString, SdkRequest.class);
 			req.url = "/upload/"+name;
 			rep = dispatch(request,req);
+//			if(req.token != null&&!req.token.equals("")) {
+//				UserService us = (UserService)factor.getBean("UserService");
+//				User u = us.getUserByToken(req.token);
+//				if(u !=null) {
+//					
+//				}
+//			}
 		} else {
 			rep.resultTip = "请求不合法";
 		}
+		
+		
+		
 		String repsonseString =  objectMapper.writeValueAsString(rep);
 		System.out.println(repsonseString);
 		response.setContentType("text/html; charset=utf-8");
