@@ -16,9 +16,9 @@ public class MessageService {
 	private MessageDao dao;
 	
 	
-	public List<Message> getNewMessage(Integer userId) {
+	public List<Message> getNewMessage(Integer userId,Integer pageSize,Integer pageNum) {
 		
-		return dao.getMessage(userId);
+		return dao.getMessage(userId, pageSize, pageNum);
 		
 	}
 	

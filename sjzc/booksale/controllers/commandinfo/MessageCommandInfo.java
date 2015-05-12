@@ -1,5 +1,5 @@
 package cn.sjzc.booksale.controllers.commandinfo;
 
-public class MessageCommandInfo {
+public class MessageCommandInfo extends Page {
 	
 }

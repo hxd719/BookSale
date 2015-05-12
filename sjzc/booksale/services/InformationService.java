@@ -61,6 +61,18 @@ public class InformationService {
 	}
 	
 	
+	
+	@SuppressWarnings("unchecked")
+	private List<BuyInfor> findBuyInfoList(String searchKey) {
+		List<BuyInfor> list = null;
+		PagerVO data = null;
+		String sql ="select b from BuyInfo b where  b.deadline > now() and  b.name like ? order by b.publishTime desc";
+		data = bdao.findPaginated(sql,"%"+searchKey+"%");
+		list = (List<BuyInfor>)data.getDatas();
+		return list;
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<BuyInfor> getBuyInfoListByUserId(Integer userId,Integer pageSize,Integer pageNum,String searchKey) {
 		List<BuyInfor> list = null;
@@ -127,6 +139,9 @@ public class InformationService {
 		info.setUser(u);
 		info.setDescription(commandinfo.content);
 		sdao.save(info);
+		
+		
+		
 		return info.getId();
 	}
 	
