@@ -114,9 +114,12 @@ public class InformationService {
 	public int addSellInfor(User u,InformationCommandInfo commandinfo) {
 		SellInfor info = new SellInfor();
 		Date time = new Date();
-		Book b = bookService.getBookById(commandinfo.bookId);
-		info.setBook(b);
-		info.setBookName(b.getName());
+		info.setBookName(commandinfo.bookName);
+		if(commandinfo.bookId != null) {
+			Book b = bookService.getBookById(commandinfo.bookId);
+			info.setBook(b);
+			info.setBookName(b.getName());
+		}
 		info.setCategory(categoryService.getCategoryById(commandinfo.categoryId));
 		info.setPublishTime(time);
 		info.setDeadline(new Date(time.getTime()+1296000000));
@@ -162,6 +165,9 @@ public class InformationService {
 	public int updateSellInfor( InformationCommandInfo commandinfo) {
 		SellInfor info = sdao.findById(SellInfor.class, commandinfo.id);
 		Date time = new Date();
+		if(commandinfo.bookName != null) {
+			info.setBookName(commandinfo.bookName);
+		}
 		if(commandinfo.bookId != null) {
 			Book b = bookService.getBookById(commandinfo.bookId);
 			info.setBook(b);
