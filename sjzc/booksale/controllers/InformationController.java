@@ -183,33 +183,9 @@ public class InformationController extends AbstractController {
 		return rep;
 	}
 	
+	
+	
 	/*
-	public SdkResponse search(SdkRequest req) throws IOException	{
-		SdkResponse rep = new SdkResponse();
-		InformationCommandInfo commandInfo = null;
-		try {
-			commandInfo = getCommandInfo(req.commandInfo, InformationCommandInfo.class);
-		} catch (Exception e) {
-			rep.resultTip = "数据非法";
-			return rep;
-		}
-		if( commandInfo.password == null || commandInfo.phone == null) {
-			rep.resultTip = "数据非法";
-			return rep;
-		}
-		User u = service.updateUser(commandInfo);
-		if(u != null) {
-			rep.responseData = new UserInfo(u);
-			return rep;
-		} else {
-			rep.resultTip = "原密码不正确";
-		}
-		return rep;
-	}
-	
-	
-	
-	
 	
 	public SdkResponse getUnRead(SdkRequest req) throws IOException	{
 		SdkResponse rep = new SdkResponse();
