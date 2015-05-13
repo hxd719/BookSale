@@ -31,6 +31,10 @@ public class InformationService {
 	
 	@Resource
 	private CategoryService categoryService;
+	
+	@Resource
+	private MessageService messageService;
+	
 
 	@SuppressWarnings("unchecked")
 	public List<BuyInfor> getBuyInfoList(Integer categoryId,Integer pageSize,Integer pageNum,String searchKey) {
@@ -121,8 +125,13 @@ public class InformationService {
 			info.setBook(b);
 			info.setBookName(b.getName());
 		}
-		
 		bdao.save(info);
+		if(commandinfo.bookId != null||(commandinfo.bookName != null &&!commandinfo.bookName.equals(""))) {
+			List<SellInfor> list = findSellInfoList(commandinfo.bookId, commandinfo.bookName);
+			for (SellInfor sellInfor : list) {
+				messageService.addNewMessage(info.getUser().getId(), sellInfor);
+			}
+		}
 		
 		return info.getId();
 	}
