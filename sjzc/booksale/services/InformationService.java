@@ -37,7 +37,7 @@ public class InformationService {
 		List<BuyInfor> list = null;
 		PagerVO data = null;
 		if(searchKey != null) {
-			String sql ="select b from BuyInfo b , Category c  where  b.deadline > now() and c.id=? and b.name like ? order by b.publishTime desc";
+			String sql ="select b from BuyInfor b , Category c  where  b.deadline > now() and c.id=? and b.name like ? order by b.publishTime desc";
 			data = bdao.findPaginated(sql,new Object[]{categoryId,"%"+searchKey+"%"} ,(pageNum-1)*pageSize, pageSize);
 		} else {
 			String sql ="select b from BuyInfor b , Category c where  b.deadline > now() and c.id = ? order by b.publishTime desc";
@@ -63,12 +63,17 @@ public class InformationService {
 	
 	
 	@SuppressWarnings("unchecked")
-	private List<BuyInfor> findBuyInfoList(String searchKey) {
-		List<BuyInfor> list = null;
+	private List<SellInfor> findSellInfoList(Integer bookId,String searchKey) {
+		List<SellInfor> list = null;
 		PagerVO data = null;
-		String sql ="select b from BuyInfo b where  b.deadline > now() and  b.name like ? order by b.publishTime desc";
-		data = bdao.findPaginated(sql,"%"+searchKey+"%");
-		list = (List<BuyInfor>)data.getDatas();
+		if(bookId != null) {
+			String sql ="select s from SellInfor s,Book b where  s.deadline > now() and  b.id = ? order by s.publishTime desc";
+			data = bdao.findPaginated(sql,bookId);
+		} else {
+			String sql ="select s from SellInfor s  where  s.deadline > now() and  s.bookName like ? order by s.publishTime desc";
+			data = bdao.findPaginated(sql,"%"+searchKey+"%");
+		}
+		list = (List<SellInfor>)data.getDatas();
 		return list;
 	}
 	
@@ -78,7 +83,7 @@ public class InformationService {
 		List<BuyInfor> list = null;
 		PagerVO data = null;
 		if(searchKey != null) {
-			String sql ="select b from BuyInfo b , User u  where  u.id=? and b.name like ? order by b.publishTime desc";
+			String sql ="select b from BuyInfor b , User u  where  u.id=? and b.name like ? order by b.publishTime desc";
 			data = bdao.findPaginated(sql,new Object[]{userId,"%"+searchKey+"%"} ,(pageNum-1)*pageSize, pageSize);
 		} else {
 			String sql ="select b from BuyInfor b , User u  where u.id = ? order by b.publishTime desc";

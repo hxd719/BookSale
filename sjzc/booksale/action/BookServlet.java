@@ -95,15 +95,15 @@ public class BookServlet extends HttpServlet {
 			SdkRequest req = objectMapper.readValue(requestString, SdkRequest.class);
 			req.url = "/upload/"+name;
 			rep = dispatch(request,req);
-//			Map<String, Object> data = new HashMap<String, Object>();
-//			try{
-//				Integer id = Integer.valueOf(req.token.split("\\|")[0]);
-//				data.put("newMesssage", CacheClientPool.getClient().get(id.toString()));
-//			}catch(Exception e) {
-//			}
-//			if(req.lastRequestTime < NewInfo.time){
-//				data.put("newInfo", true);
-//			}
+			Map<String, Object> data = new HashMap<String, Object>();
+			try{
+				Integer id = Integer.valueOf(req.token.split("\\|")[0]);
+				data.put("newMesssage", CacheClientPool.getClient().get(id.toString()));
+			}catch(Exception e) {
+			}
+			if(req.lastRequestTime < NewInfo.time){
+				data.put("newInfo", true);
+			}
 		} else {
 			rep.resultTip = "请求不合法";
 		}
