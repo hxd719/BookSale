@@ -101,7 +101,7 @@ public class BookServlet extends HttpServlet {
 				data.put("newMesssage", CacheClientPool.getClient().get(id.toString()));
 			}catch(Exception e) {
 			}
-			if(req.lastRequestTime < NewInfo.time){
+			if(req.lastRequestTime!=null && req.lastRequestTime < NewInfo.time){
 				data.put("newInfo", true);
 			}
 		} else {
