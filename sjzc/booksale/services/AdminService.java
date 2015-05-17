@@ -15,5 +15,13 @@ public class AdminService {
 	public Admin getAdmin(Admin a) {
 		return dao.getAdminByName(a.getName());
 	}
+	
+	public Admin getAdmin(Integer id) {
+		return dao.findById(Admin.class,id);
+	}
+	
+	public void update(Admin a) {
+		 dao.update(a);
+	}
 
 }

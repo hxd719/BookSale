@@ -4,6 +4,7 @@ import java.util.List;
 
 public class PagerVO {
 	private int total;
+	private int currenPageNum;
 	private List<?> datas;
 	
 	public int getTotal() {
@@ -18,4 +19,12 @@ public class PagerVO {
 	public void setDatas(List<?> datas) {
 		this.datas = datas;
 	}
+	public int getCurrenPageNum() {
+		return currenPageNum;
+	}
+	public void setCurrenPageNum(int currenPageNum) {
+		this.currenPageNum = currenPageNum;
+	}
+	
+	
 }

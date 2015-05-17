@@ -35,6 +35,23 @@ public class InformationService {
 	@Resource
 	private MessageService messageService;
 	
+	
+	
+	public PagerVO getBuyInfoList( Integer pageSize,Integer pageNum,String searchKey) {
+		PagerVO data = null;
+		String sql ="select b from BuyInfor b where  b.bookName like ? order by b.publishTime desc";
+		data = bdao.findPaginated(sql,"%"+searchKey+"%" ,(pageNum-1)*pageSize, pageSize);
+		return data;
+	}
+	
+	
+	public PagerVO getSellInfoList( Integer pageSize,Integer pageNum,String searchKey) {
+		PagerVO data = null;
+		String sql ="select b from SellInfor b where  b.bookName like ? order by b.publishTime desc";
+		data = bdao.findPaginated(sql,"%"+searchKey+"%" ,(pageNum-1)*pageSize, pageSize);
+		return data;
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	public List<BuyInfor> getBuyInfoList(Integer categoryId,Integer pageSize,Integer pageNum,String searchKey) {
@@ -56,10 +73,10 @@ public class InformationService {
 		List<SellInfor> list = null;
 		if(searchKey != null) {
 			String sql ="select b from SellInfor b, Category c  where  b.deadline > now() and c.id=? and b.bookName like ? order by b.publishTime desc";
-			list = (List<SellInfor>)sdao.findPaginated(sql,new Object[]{categoryId,"%"+searchKey+"%"}, (pageNum-1)*pageSize, pageSize);
+			list = (List<SellInfor>)(sdao.findPaginated(sql,new Object[]{categoryId,"%"+searchKey+"%"}, (pageNum-1)*pageSize, pageSize).getDatas());
 		} else {
 			String sql ="select b from SellInfor b, Category c  where  b.deadline > now() and c.id=? order by b.publishTime desc";
-			list = (List<SellInfor>)sdao.findPaginated(sql,categoryId ,(pageNum-1)*pageSize, pageSize);
+			list = (List<SellInfor>)(sdao.findPaginated(sql,categoryId ,(pageNum-1)*pageSize, pageSize).getDatas());
 		}
 		return list;
 	}
@@ -67,17 +84,17 @@ public class InformationService {
 	
 	
 	@SuppressWarnings("unchecked")
-	private List<SellInfor> findSellInfoList(Integer bookId,String searchKey) {
-		List<SellInfor> list = null;
+	private List<BuyInfor> findBuyInfoList(Integer bookId,String searchKey) {
+		List<BuyInfor> list = null;
 		PagerVO data = null;
 		if(bookId != null) {
-			String sql ="select s from SellInfor s,Book b where  s.deadline > now() and  b.id = ? order by s.publishTime desc";
+			String sql ="select s from BuyInfor s,Book b where  s.deadline > now() and  b.id = ? order by s.publishTime desc";
 			data = bdao.findPaginated(sql,bookId);
 		} else {
-			String sql ="select s from SellInfor s  where  s.deadline > now() and  s.bookName like ? order by s.publishTime desc";
+			String sql ="select s from BuyInfor s  where  s.deadline > now() and  s.bookName like ? order by s.publishTime desc";
 			data = bdao.findPaginated(sql,"%"+searchKey+"%");
 		}
-		list = (List<SellInfor>)data.getDatas();
+		list = (List<BuyInfor>)data.getDatas();
 		return list;
 	}
 	
@@ -102,10 +119,10 @@ public class InformationService {
 		List<SellInfor> list = null;
 		if(searchKey != null) {
 			String sql ="select b from SellInfor b, User u   where  u.id=? and b.bookName like ? order by b.publishTime desc";
-			list = (List<SellInfor>)sdao.findPaginated(sql,new Object[]{userId,"%"+searchKey+"%"}, (pageNum-1)*pageSize, pageSize);
+			list = (List<SellInfor>)(sdao.findPaginated(sql,new Object[]{userId,"%"+searchKey+"%"}, (pageNum-1)*pageSize, pageSize).getDatas());
 		} else {
 			String sql ="select b from SellInfor b, User u   where  u.id=? order by b.publishTime desc";
-			list = (List<SellInfor>)sdao.findPaginated(sql,userId ,(pageNum-1)*pageSize, pageSize);
+			list = (List<SellInfor>)(sdao.findPaginated(sql,userId ,(pageNum-1)*pageSize, pageSize).getDatas());
 		}
 		return list;
 	}
@@ -126,12 +143,7 @@ public class InformationService {
 			info.setBookName(b.getName());
 		}
 		bdao.save(info);
-		if(commandinfo.bookId != null||(commandinfo.bookName != null &&!commandinfo.bookName.equals(""))) {
-			List<SellInfor> list = findSellInfoList(commandinfo.bookId, commandinfo.bookName);
-			for (SellInfor sellInfor : list) {
-				messageService.addNewMessage(info.getUser().getId(), sellInfor);
-			}
-		}
+	
 		
 		return info.getId();
 	}
@@ -154,7 +166,12 @@ public class InformationService {
 		info.setDescription(commandinfo.content);
 		sdao.save(info);
 		
-		
+		if(commandinfo.bookId != null||(commandinfo.bookName != null &&!commandinfo.bookName.equals(""))) {
+			List<BuyInfor> list = findBuyInfoList(commandinfo.bookId, commandinfo.bookName);
+			for (BuyInfor sellInfor : list) {
+				messageService.addNewMessage(sellInfor.getUser().getId(), info);
+			}
+		}
 		
 		return info.getId();
 	}
@@ -224,9 +241,21 @@ public class InformationService {
 		bdao.del(info);
 	}
 	
+	public void deleteBuyInfor(Integer id) {
+		BuyInfor info = new BuyInfor();
+		info.setId(id);
+		bdao.del(info);
+	}
+	
 	public void deleteSellInfor(InformationCommandInfo commandinfo) {
 		SellInfor info = new SellInfor();
 		info.setId(commandinfo.id);
+		sdao.del(info);
+	}
+	
+	public void deleteSellInfor(Integer id) {
+		SellInfor info = new SellInfor();
+		info.setId(id);
 		sdao.del(info);
 	}
 

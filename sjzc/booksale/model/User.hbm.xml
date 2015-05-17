@@ -15,6 +15,15 @@
 		<property name="tel"></property>
 		<property name="token"></property>
 		
+		<set name="buyinfors"  cascade="all"  inverse="true" lazy="true">
+			<key column="userid"></key>
+        <one-to-many class="cn.sjzc.booksale.model.BuyInfor"/>
+		</set>
+		<set name="sellinfors"  cascade="all"  inverse="true" lazy="true">
+			<key column="userid"></key>
+        <one-to-many class="cn.sjzc.booksale.model.SellInfor"/>
+		</set>
+		
 	</class>
 	
 </hibernate-mapping>

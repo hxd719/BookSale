@@ -62,6 +62,34 @@ public class BookService {
 		return dao.findById(Book.class, id);
 	}
 	
+	public void delete(Book b) {
+		dao.del(b);
+	}
+	
+	public void delete(Integer id) {
+		Book b = new Book();
+		b.setId(id);
+		dao.del(b);
+	}
+	
+	
+	public void update(Book b) {
+		dao.update(b);
+	}
+	
+	public PagerVO getBookLists(Integer pageNum,String searchKey) {
+		if(searchKey == null) {
+			searchKey = "";
+		}
+		String sql = "select b from Book b  where b.name like ? order by b.id desc";
+		PagerVO data = dao.findPaginated(sql,"%"+searchKey+"%", (pageNum-1)*10, 10);
+		for (Book book : (List<Book>)data.getDatas()) {
+			book.setCover("http://123.57.219.149"+(book.getCover()==null?"/Image/0000000000.jpg":book.getCover()));
+		}
+		
+		return data;
+	}
+	
 	
 
 }

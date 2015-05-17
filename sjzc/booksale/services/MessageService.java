@@ -33,7 +33,8 @@ public class MessageService {
 		m.setState(0);
 		m.setTime(new Date());
 		dao.save(m);
-		CacheClientPool.getClient().set(userId.toString(), 10000, true);
+		CacheClientPool.getClient().delete(userId.toString());
+		CacheClientPool.getClient().add(userId.toString(), 1000, true);
 	}
 	
 

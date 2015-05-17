@@ -1,9 +1,13 @@
 package cn.sjzc.booksale.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class User {
-	private Integer id;
+	private int id;
 	private String name;
 	private String password;
 	private String tel;
@@ -11,8 +15,29 @@ public class User {
 	private String token;
 	private Date expired;
 	private Date date;
+	@JsonIgnore
+	private Set<BuyInfor> buyinfors;
+	@JsonIgnore
+	private Set<SellInfor> sellinfors;
 	
-	
+	public Set<BuyInfor> getBuyinfors() {
+		if(buyinfors == null){
+			buyinfors = new HashSet<BuyInfor>();
+		}
+		return buyinfors;
+	}
+	public void setBuyinfors(Set<BuyInfor> buyinfors) {
+		this.buyinfors = buyinfors;
+	}
+	public Set<SellInfor> getSellinfors() {
+		if(sellinfors == null) {
+			sellinfors = new HashSet<SellInfor>();
+		}
+		return sellinfors;
+	}
+	public void setSellinfors(Set<SellInfor> sellinfors) {
+		this.sellinfors = sellinfors;
+	}
 	
 	public Date getExpired() {
 		return expired;
@@ -20,12 +45,17 @@ public class User {
 	public void setExpired(Date expired) {
 		this.expired = expired;
 	}
-	public Integer getId() {
+	
+	
+	
+	public int getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
+	
+	
 	public String getName() {
 		return name;
 	}

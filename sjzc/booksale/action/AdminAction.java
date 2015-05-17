@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import cn.sjzc.booksale.model.Admin;
 import cn.sjzc.booksale.services.AdminService;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
 
 @Controller("adminaction")
@@ -66,6 +67,8 @@ public class AdminAction implements ModelDriven<Admin> {
 //		
 //	}
 	
+	
+	
 	public void setPassword1(String password1) {
 		this.password1 = password1;
 	}
@@ -100,6 +103,18 @@ public class AdminAction implements ModelDriven<Admin> {
 //	}
 //	
 //	
+	
+	public String update() {
+		
+		int id = admin.getId();
+		Admin a = service.getAdmin(id);
+		if(a.getPassword().equals(password1)) {
+			a.setPassword(admin.getPassword());
+			service.update(a);
+			return "su";
+		}
+		return "fa";
+	}
 	
 	public String loginout() {
 		

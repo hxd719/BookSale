@@ -12,6 +12,15 @@
 		<property name="ISBN"></property>
 		<property name="cover"></property>
 		<property name="press"></property>
+		<set name="buyinfors" inverse="true" cascade="all" lazy="true">
+			<key column="bookid"></key>
+        <one-to-many class="cn.sjzc.booksale.model.BuyInfor"/>
+		</set>
+		
+		<set name="sellinfors" inverse="true" cascade="all" lazy="true" >
+			<key column="bookid"></key>
+        <one-to-many class="cn.sjzc.booksale.model.SellInfor"/>
+		</set>
 	</class>
 	
 </hibernate-mapping>

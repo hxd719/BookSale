@@ -5,29 +5,28 @@ import javax.annotation.Resource;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
-import cn.sjzc.booksale.model.Book;
-import cn.sjzc.booksale.services.BookService;
+import cn.sjzc.booksale.model.Category;
+import cn.sjzc.booksale.services.CategoryService;
 import cn.sjzc.booksale.utill.PageModel;
 import cn.sjzc.booksale.utill.PagerVO;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
 
-@Controller("BookAction")
-public class BookAction implements ModelDriven<Book> {
+@Controller("CategoryAction")
+public class CategoryAction implements ModelDriven<Category> {
 
 	@Resource
-	private BookService service;
+	private CategoryService service;
 	
-	private String searchKey;
-	private Book book;
+	private Category book;
 	
 	private PageModel pm;
 
 	@Override
-	public Book getModel() {
+	public Category getModel() {
 		if(book == null) {
-			book = new Book();
+			book = new Category();
 		}
 		return book;
 	}
@@ -39,27 +38,20 @@ public class BookAction implements ModelDriven<Book> {
 	}
 	
 	
-
-	public String getSearchKey() {
-		return searchKey;
-	}
-	public void setSearchKey(String searchKey) {
-		this.searchKey = searchKey;
-	}
 	public String list() {
-		PagerVO data = service.getBookLists(pm.getPageNum(),searchKey);
+		PagerVO data = service.getCategoryLists(pm.getPageNum(), null);
 		ActionContext.getContext().put("data", data);
-		ActionContext.getContext().put("searchKey", searchKey);
+		ActionContext.getContext().put("searchKey", null);
 		return "success";
 	}
 	
 	public String add() {
-		service.addBook(book);
+		service.add(book);
 		return "add";
 	}
 
 	public String modify() {
-		ActionContext.getContext().put("book", service.getBookById(book.getId()));
+		ActionContext.getContext().put("book", service.getCategoryById(book.getId()));
 		return "success";
 	}
 	
@@ -70,7 +62,7 @@ public class BookAction implements ModelDriven<Book> {
 	
 	
 	public String delete() {
-		service.delete(book);
+		service.delete(book.getId());
 		return "add";
 	}
 	

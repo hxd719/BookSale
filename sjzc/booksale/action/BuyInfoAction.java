@@ -5,31 +5,31 @@ import javax.annotation.Resource;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.stereotype.Controller;
 
-import cn.sjzc.booksale.model.Book;
-import cn.sjzc.booksale.services.BookService;
+import cn.sjzc.booksale.model.BuyInfor;
+import cn.sjzc.booksale.services.InformationService;
 import cn.sjzc.booksale.utill.PageModel;
 import cn.sjzc.booksale.utill.PagerVO;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
 
-@Controller("BookAction")
-public class BookAction implements ModelDriven<Book> {
+@Controller("BuyInfoAction")
+public class BuyInfoAction implements ModelDriven<BuyInfor> {
 
 	@Resource
-	private BookService service;
+	private InformationService service;
 	
 	private String searchKey;
-	private Book book;
+	private BuyInfor entity;
 	
 	private PageModel pm;
 
 	@Override
-	public Book getModel() {
-		if(book == null) {
-			book = new Book();
+	public BuyInfor getModel() {
+		if(entity == null) {
+			entity = new BuyInfor();
 		}
-		return book;
+		return entity;
 	}
 	public PageModel getPm() {
 		return pm;
@@ -47,30 +47,19 @@ public class BookAction implements ModelDriven<Book> {
 		this.searchKey = searchKey;
 	}
 	public String list() {
-		PagerVO data = service.getBookLists(pm.getPageNum(),searchKey);
+		if(searchKey == null) {
+			searchKey = "";
+		}
+		PagerVO data = service.getBuyInfoList(10, pm.getPageNum(), searchKey);
 		ActionContext.getContext().put("data", data);
 		ActionContext.getContext().put("searchKey", searchKey);
 		return "success";
 	}
-	
-	public String add() {
-		service.addBook(book);
-		return "add";
-	}
 
-	public String modify() {
-		ActionContext.getContext().put("book", service.getBookById(book.getId()));
-		return "success";
-	}
-	
-	public String update() {
-		service.update(book);
-		return "add";
-	}
 	
 	
 	public String delete() {
-		service.delete(book);
+		service.deleteBuyInfor(entity.getId());
 		return "add";
 	}
 	
@@ -78,7 +67,7 @@ public class BookAction implements ModelDriven<Book> {
 		if(ServletActionContext.getRequest().getParameterValues("ids") != null) {
 			String ids[] = ServletActionContext.getRequest().getParameterValues("ids");
 			for (int i = 0; i < ids.length; i++) {
-				service.delete(Integer.parseInt(ids[i]));
+				service.deleteBuyInfor(Integer.parseInt(ids[i]));
 			}
 		}
 		return "add";

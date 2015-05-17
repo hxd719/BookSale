@@ -80,14 +80,14 @@ public class InformationController extends AbstractController {
 		}
 		if(commandInfo.isSell){
 			SellInfor sellInfo = service.getSellInfor(commandInfo.id);
-			if(!sellInfo.getUser().getId().equals(u.getId())) {
+			if(sellInfo.getUser().getId()!=u.getId()) {
 				rep.resultTip = "非法操作";
 				return rep;
 			}
 			service.updateSellInfor(commandInfo);
 		} else {
 			BuyInfor buyInfo = service.getBuyInfo(commandInfo.id);
-			if(!buyInfo.getUser().getId().equals(u.getId())) {
+			if(buyInfo.getUser().getId()!=u.getId()) {
 				rep.resultTip = "非法操作";
 				return rep;
 			}
@@ -117,14 +117,14 @@ public class InformationController extends AbstractController {
 		}
 		if(commandInfo.isSell){
 			SellInfor sellInfo = service.getSellInfor(commandInfo.id);
-			if(!sellInfo.getUser().getId().equals(u.getId())) {
+			if(sellInfo.getUser().getId()!=u.getId()) {
 				rep.resultTip = "非法操作";
 				return rep;
 			}
 			service.deleteSellInfor(commandInfo);
 		} else {
 			BuyInfor buyInfo = service.getBuyInfo(commandInfo.id);
-			if(!buyInfo.getUser().getId().equals(u.getId())) {
+			if(buyInfo.getUser().getId()==u.getId()) {
 				rep.resultTip = "非法操作";
 				return rep;
 			}

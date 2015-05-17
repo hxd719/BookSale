@@ -1,5 +1,6 @@
 package cn.sjzc.booksale.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -29,6 +30,7 @@ public class BaseDao {
 
 	public void del(Object entity) {
 		getSession().delete(entity);
+		getSession().flush();
 	}
 
 	public List<?> find(Object entity) {
@@ -86,10 +88,13 @@ public class BaseDao {
 		query.setFirstResult(offset);
 		query.setMaxResults(pagesize);
 		List<?> datas = query.list();
-
+		if(datas == null) {
+			datas = new ArrayList();
+		}
 		PagerVO pv = new PagerVO();
 		pv.setDatas(datas);
 		pv.setTotal(total);
+		pv.setCurrenPageNum(offset/pagesize+1);
 
 		return pv;
 	}

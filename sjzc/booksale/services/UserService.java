@@ -11,6 +11,7 @@ import cn.sjzc.booksale.controllers.commandinfo.UserCommandInfo;
 import cn.sjzc.booksale.dao.UserDao;
 import cn.sjzc.booksale.model.User;
 import cn.sjzc.booksale.utill.MD5;
+import cn.sjzc.booksale.utill.PagerVO;
 
 @Service("UserService")
 public class UserService {
@@ -103,6 +104,20 @@ public class UserService {
 		} else {
 			return null;
 		}
+	}
+	
+	
+	public PagerVO getUserList( Integer pageSize,Integer pageNum,String searchKey) {
+		PagerVO data = null;
+		String sql ="select u from User u where  u.tel like ? ";
+		data = dao.findPaginated(sql,"%"+searchKey+"%" ,(pageNum-1)*pageSize, pageSize);
+		return data;
+	}
+	
+
+	public void delUser( Integer id) {
+		User u = dao.findById(User.class, id);
+		dao.del(u);
 	}
 
 }
