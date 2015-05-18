@@ -20,9 +20,8 @@ public class MessageService {
 	
 	
 	public List<Message> getNewMessage(Integer userId,Integer pageSize,Integer pageNum) {
-		
+		CacheClientPool.getClient().delete(userId.toString());
 		return dao.getMessage(userId, pageSize, pageNum);
-		
 	}
 	
 	
@@ -34,7 +33,11 @@ public class MessageService {
 		m.setTime(new Date());
 		dao.save(m);
 		CacheClientPool.getClient().delete(userId.toString());
-		CacheClientPool.getClient().add(userId.toString(), 1000, true);
+	}
+	
+	
+	public Boolean isNewMessage(Integer userId) {
+		return dao.isNewMessage(userId);
 	}
 	
 

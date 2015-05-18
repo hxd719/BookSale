@@ -254,8 +254,7 @@ public class InformationService {
 	}
 	
 	public void deleteSellInfor(Integer id) {
-		SellInfor info = new SellInfor();
-		info.setId(id);
+		SellInfor info = sdao.findById(SellInfor.class, id);
 		sdao.del(info);
 	}
 

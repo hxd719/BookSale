@@ -11,7 +11,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
 import cn.sjzc.booksale.utill.PagerVO;
-import cn.sjzc.booksale.utill.SystemContext;
 public class BaseDao {
 	@Resource
 	private SessionFactory sessionFactory;
@@ -56,9 +55,6 @@ public class BaseDao {
 		return findPaginated(query, new Object[]{param});
 	}
 
-	public PagerVO findPaginated(String query, Object[] params) {
-		return findPaginated(query, params, SystemContext.getOffset(), SystemContext.getPagesize());
-	}
 
 	public PagerVO findPaginated(String query, int offset, int pagesize) {
 		return findPaginated(query, null,offset,pagesize);

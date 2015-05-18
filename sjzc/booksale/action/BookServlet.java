@@ -23,6 +23,7 @@ import org.apache.commons.fileupload.util.Streams;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import cn.sjzc.booksale.services.MessageService;
 import cn.sjzc.booksale.utill.CacheClientPool;
 import cn.sjzc.booksale.utill.MD5;
 import cn.sjzc.booksale.utill.NewInfo;
@@ -95,17 +96,22 @@ public class BookServlet extends HttpServlet {
 			SdkRequest req = objectMapper.readValue(requestString, SdkRequest.class);
 			req.url = "/upload/"+name;
 			rep = dispatch(request,req);
-//			Map<String, Object> data = new HashMap<String, Object>();
-//			try{
-//				Integer id = Integer.valueOf(req.token.split("\\|")[0]);
-//				Object o = CacheClientPool.getClient().get(id.toString());
-//				data.put("newMesssage",o );
-//			}catch(Exception e) {
-//			}
-//			if(req.lastRequestTime!=null && req.lastRequestTime < NewInfo.time){
-//				data.put("newInfo", true);
-//			}
-//			rep.pushData = data;
+			Map<String, Object> data = new HashMap<String, Object>();
+			try{
+				Integer id = Integer.valueOf(req.token.split("\\|")[0]);
+				Object o = CacheClientPool.getClient().get(id.toString());
+				if(o == null) {
+					o = factor.getBean(MessageService.class).isNewMessage(id);
+					CacheClientPool.getClient().set(id.toString(), 1000, o);
+				}
+				data.put("newMesssage",o );
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			if(req.lastRequestTime!=null && req.lastRequestTime < NewInfo.time){
+				data.put("newInfo", true);
+			}
+			rep.pushData = data;
 		} else {
 			rep.resultTip = "请求不合法";
 		}

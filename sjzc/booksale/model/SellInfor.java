@@ -1,6 +1,10 @@
 package cn.sjzc.booksale.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 public class SellInfor {
@@ -14,10 +18,19 @@ public class SellInfor {
 	private Date publishTime;
 	private Date deadline;
 	
+	@JsonIgnore
+	private Set<Message> messages;
 	
 	
-	
-	
+	public Set<Message> getMessages() {
+		if(messages==null) {
+			this.messages = new HashSet<Message>();
+		}
+		return messages;
+	}
+	public void setMessages(Set<Message> messages) {
+		this.messages = messages;
+	}
 	public Date getDeadline() {
 		return deadline;
 	}

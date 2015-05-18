@@ -2,15 +2,15 @@ package cn.sjzc.booksale.model;
 import java.util.Date;
 
 public class Message {
-	private Integer id;
+	private int id;
 	private Integer userId;
 	private SellInfor sellInfo;
 	private Date time;
 	private Integer state;
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
