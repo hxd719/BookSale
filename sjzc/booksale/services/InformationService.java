@@ -89,10 +89,10 @@ public class InformationService {
 		PagerVO data = null;
 		if(bookId != null) {
 			String sql ="select s from BuyInfor s,Book b where  s.deadline > now() and  b.id = ? order by s.publishTime desc";
-			data = bdao.findPaginated(sql,bookId);
+			data = bdao.findPaginated(sql,bookId,0,Integer.MAX_VALUE);
 		} else {
 			String sql ="select s from BuyInfor s  where  s.deadline > now() and  s.bookName like ? order by s.publishTime desc";
-			data = bdao.findPaginated(sql,"%"+searchKey+"%");
+			data = bdao.findPaginated(sql,"%"+searchKey+"%",0,Integer.MAX_VALUE);
 		}
 		list = (List<BuyInfor>)data.getDatas();
 		return list;
