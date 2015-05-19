@@ -52,7 +52,7 @@ public class BaseDao {
 	}
 
 	public PagerVO findPaginated(String query, Object param) {
-		return findPaginated(query, new Object[]{param});
+		return findPaginated(query, new Object[]{param},0,20);
 	}
 
 
