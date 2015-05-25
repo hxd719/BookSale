@@ -17,15 +17,15 @@ public class BookInfo {
 	
 	public BookInfo(Book book) {
 		this.author = book.getAuthor();
+		this.press = book.getPress();
+		this.id = book.getId();
+		this.ISBN = book.getISBN();
+		this.name = book.getName();
 		if(book.getCover() == null) {
 			this.cover = "http://123.57.219.149/Image/0000000000.jpg";
 		} else {
 			this.cover = "http://123.57.219.149"+book.getCover();
 		}
-		this.id = book.getId();
-		this.ISBN = book.getISBN();
-		this.name = book.getName();
-		this.press = book.getPress();
 	}
 
 

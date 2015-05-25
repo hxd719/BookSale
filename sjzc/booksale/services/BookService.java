@@ -62,14 +62,9 @@ public class BookService {
 		return dao.findById(Book.class, id);
 	}
 	
-	public void delete(Book b) {
-		dao.del(b);
-	}
-	
 	public void delete(Integer id) {
-		Book b = new Book();
-		b.setId(id);
-		dao.del(b);
+		Book book = dao.findById(Book.class, id);
+		dao.del(book);
 	}
 	
 	

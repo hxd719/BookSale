@@ -29,7 +29,7 @@ public class UserService {
 		user.setName(commandInfo.name);
 		user.setPassword(MD5.getMD5(commandInfo.password));
 		user.setSex(commandInfo.sex);
-		user.setTel(commandInfo.phone);
+		user.setPhone(commandInfo.phone);
 		user.setToken(null);
 		dao.save(user);
 		user.setToken(user.getId()+"|"+MD5.getMD5(date.getTime()+commandInfo.phone));
@@ -85,7 +85,7 @@ public class UserService {
 	@SuppressWarnings("unchecked")
 	public User getUserByPhone(String phone) {
 		User u = new User();
-		u.setTel(phone);
+		u.setPhone(phone);
 		List<User> users = (List<User>)dao.find(u);
 		if(!users.isEmpty()) {
 			return users.get(0);
@@ -109,7 +109,7 @@ public class UserService {
 	
 	public PagerVO getUserList( Integer pageSize,Integer pageNum,String searchKey) {
 		PagerVO data = null;
-		String sql ="select u from User u where  u.tel like ? ";
+		String sql ="select u from User u where  u.phone like ? ";
 		data = dao.findPaginated(sql,"%"+searchKey+"%" ,(pageNum-1)*pageSize, pageSize);
 		return data;
 	}

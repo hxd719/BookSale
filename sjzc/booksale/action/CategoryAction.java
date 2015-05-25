@@ -46,6 +46,9 @@ public class CategoryAction implements ModelDriven<Category> {
 	}
 	
 	public String add() {
+		if(book.getName().equals("")){
+			return "add";
+		}
 		service.add(book);
 		return "add";
 	}

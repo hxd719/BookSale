@@ -70,6 +70,8 @@ public class Book {
 		this.press = press;
 	}
 	public String getCover() {
+
+		
 		return cover;
 	}
 	public void setCover(String cover) {

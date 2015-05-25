@@ -104,7 +104,7 @@ public class BookServlet extends HttpServlet {
 					o = factor.getBean(MessageService.class).isNewMessage(id);
 					CacheClientPool.getClient().set(id.toString(), 1000, o);
 				}
-				data.put("newMesssage",o );
+				data.put("newMessage",o );
 			}catch(Exception e) {
 				e.printStackTrace();
 			}

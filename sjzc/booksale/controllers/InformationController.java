@@ -149,9 +149,27 @@ public class InformationController extends AbstractController {
 		}
 		if(commandInfo.isSell) {
 			List<SellInfor> listSell = service.getSellInfoList(commandInfo.categoryId, commandInfo.getPageSize(), commandInfo.getPageNum(), commandInfo.bookName);
+			for (SellInfor sellInfor : listSell) {
+				if(sellInfor.getBook()!=null) {
+					if(sellInfor.getBook().getCover() == null) {
+						sellInfor.getBook().setCover("http://123.57.219.149/Image/0000000000.jpg");
+					} else {
+						sellInfor.getBook().setCover("http://123.57.219.149"+sellInfor.getBook().getCover());
+					}
+				}
+			}
 			rep.responseData = listSell;
 		} else {
 			List<BuyInfor> listBuy = service.getBuyInfoList(commandInfo.categoryId, commandInfo.getPageSize(), commandInfo.getPageNum(), commandInfo.bookName);
+			for (BuyInfor sellInfor : listBuy) {
+				if(sellInfor.getBook()!=null) {
+					if(sellInfor.getBook().getCover() == null) {
+						sellInfor.getBook().setCover("http://123.57.219.149/Image/0000000000.jpg");
+					} else {
+						sellInfor.getBook().setCover("http://123.57.219.149"+sellInfor.getBook().getCover());
+					}
+				}
+			}
 			rep.responseData = listBuy;
 		}
 		
@@ -179,9 +197,27 @@ public class InformationController extends AbstractController {
 		}
 		if(commandInfo.isSell) {
 			List<SellInfor> listSell = service.getSellInfoListByUserId(u.getId(), commandInfo.getPageSize(), commandInfo.getPageNum(), null);
+			for (SellInfor sellInfor : listSell) {
+				if(sellInfor.getBook()!=null) {
+					if(sellInfor.getBook().getCover() == null) {
+						sellInfor.getBook().setCover("http://123.57.219.149/Image/0000000000.jpg");
+					} else {
+						sellInfor.getBook().setCover("http://123.57.219.149"+sellInfor.getBook().getCover());
+					}
+				}
+			}
 			rep.responseData = listSell;
 		} else {
 			List<BuyInfor> listBuy = service.getBuyInfoListByUserId(u.getId(), commandInfo.getPageSize(), commandInfo.getPageNum(), null);
+			for (BuyInfor sellInfor : listBuy) {
+				if(sellInfor.getBook()!=null) {
+					if(sellInfor.getBook().getCover() == null) {
+						sellInfor.getBook().setCover("http://123.57.219.149/Image/0000000000.jpg");
+					} else {
+						sellInfor.getBook().setCover("http://123.57.219.149"+sellInfor.getBook().getCover());
+					}
+				}
+			}
 			rep.responseData = listBuy;
 		}
 		

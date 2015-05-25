@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import cn.sjzc.booksale.model.Admin;
 import cn.sjzc.booksale.services.AdminService;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
 
 @Controller("adminaction")

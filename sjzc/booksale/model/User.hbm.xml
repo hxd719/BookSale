@@ -12,7 +12,7 @@
 		<property name="date"></property>
 		<property name="expired"></property>
 		<property name="sex"></property>
-		<property name="tel"></property>
+		<property name="phone"></property>
 		<property name="token"></property>
 		
 		<set name="buyinfors"  cascade="all"  inverse="true" lazy="true">

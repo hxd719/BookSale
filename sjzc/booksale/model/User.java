@@ -9,11 +9,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class User {
 	private int id;
 	private String name;
+	@JsonIgnore
 	private String password;
-	private String tel;
+	private String phone;
 	private Integer sex;
+	@JsonIgnore
 	private String token;
+	@JsonIgnore
 	private Date expired;
+	@JsonIgnore
 	private Date date;
 	@JsonIgnore
 	private Set<BuyInfor> buyinfors;
@@ -68,11 +72,12 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getTel() {
-		return tel;
+	
+	public String getPhone() {
+		return phone;
 	}
-	public void setTel(String tel) {
-		this.tel = tel;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public Integer getSex() {
 		return sex;

@@ -54,6 +54,9 @@ public class BookAction implements ModelDriven<Book> {
 	}
 	
 	public String add() {
+		if(book.getISBN().equals("")||book.getAuthor().equals("")||book.getName().equals("")) {
+			return "add";
+		}
 		service.addBook(book);
 		return "add";
 	}
@@ -70,7 +73,7 @@ public class BookAction implements ModelDriven<Book> {
 	
 	
 	public String delete() {
-		service.delete(book);
+		service.delete(book.getId());
 		return "add";
 	}
 	

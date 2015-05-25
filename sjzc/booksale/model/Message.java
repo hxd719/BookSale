@@ -1,8 +1,11 @@
 package cn.sjzc.booksale.model;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Message {
 	private int id;
+	@JsonIgnore
 	private Integer userId;
 	private SellInfor sellInfo;
 	private Date time;

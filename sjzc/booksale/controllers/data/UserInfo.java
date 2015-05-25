@@ -22,7 +22,7 @@ public class UserInfo {
 		this.expired = u.getExpired();
 		this.token = u.getToken();
 		this.name = u.getName();
-		this.phone = u.getTel();
+		this.phone = u.getPhone();
 		this.expired = u.getExpired();
 		this.sex = u.getSex();
 	}
