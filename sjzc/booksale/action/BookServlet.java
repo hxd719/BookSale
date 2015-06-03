@@ -106,10 +106,12 @@ public class BookServlet extends HttpServlet {
 				}
 				data.put("newMessage",o );
 			}catch(Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			if(req.lastRequestTime!=null && req.lastRequestTime < NewInfo.time){
 				data.put("newInfo", true);
+			} else {
+				data.put("newInfo", false);
 			}
 			rep.pushData = data;
 		} else {

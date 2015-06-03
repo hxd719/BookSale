@@ -78,6 +78,7 @@ public class BaseDao {
 		query = getSession().createQuery(queryHql);
 		if (params != null) {
 			for (int i = 0; i < params.length; i++) {
+				//System.out.println(params[i]);
 				query.setParameter(i, params[i]);
 			}
 		}

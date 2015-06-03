@@ -1,12 +1,14 @@
 package cn.sjzc.booksale.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
 import cn.sjzc.booksale.controllers.commandinfo.MessageCommandInfo;
+import cn.sjzc.booksale.model.Message;
 import cn.sjzc.booksale.model.User;
 import cn.sjzc.booksale.services.MessageService;
 import cn.sjzc.booksale.services.UserService;
@@ -36,7 +38,19 @@ public class MessageController extends AbstractController {
 			rep.resultTip = "请登录";
 			return rep;
 		}
-		rep.responseData = service.getNewMessage(u.getId(), commandInfo.getPageSize(), commandInfo.getPageNum());
+		
+		List<Message> data = service.getNewMessage(u.getId(), commandInfo.getPageSize(), commandInfo.getPageNum());
+		for (Message message : data) {
+			if(message.getSellInfo().getBook().getCover() == null) {
+				message.getSellInfo().getBook().setCover("http://123.57.219.149/Image/0000000000.jpg");
+			} else {
+				if(message.getSellInfo().getBook().getCover().indexOf("http") > -1) {
+				} else {
+					message.getSellInfo().getBook().setCover("http://123.57.219.149"+message.getSellInfo().getBook().getCover());
+				}
+			}
+		}
+		rep.responseData = data;
 		return rep;
 	}
 	

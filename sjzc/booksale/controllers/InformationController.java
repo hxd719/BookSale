@@ -121,14 +121,14 @@ public class InformationController extends AbstractController {
 				rep.resultTip = "非法操作";
 				return rep;
 			}
-			service.deleteSellInfor(commandInfo);
+			service.deleteSellInfor(sellInfo);
 		} else {
 			BuyInfor buyInfo = service.getBuyInfo(commandInfo.id);
-			if(buyInfo.getUser().getId()==u.getId()) {
+			if(buyInfo.getUser().getId()!=u.getId()) {
 				rep.resultTip = "非法操作";
 				return rep;
 			}
-			service.deleteSellInfor(commandInfo);
+			service.deleteBuyInfor(buyInfo);
 		}
 		return rep;
 	}
@@ -154,7 +154,10 @@ public class InformationController extends AbstractController {
 					if(sellInfor.getBook().getCover() == null) {
 						sellInfor.getBook().setCover("http://123.57.219.149/Image/0000000000.jpg");
 					} else {
-						sellInfor.getBook().setCover("http://123.57.219.149"+sellInfor.getBook().getCover());
+						if(sellInfor.getBook().getCover().indexOf("http") > -1) {
+						} else {
+							sellInfor.getBook().setCover("http://123.57.219.149"+sellInfor.getBook().getCover());
+						}
 					}
 				}
 			}
@@ -166,7 +169,11 @@ public class InformationController extends AbstractController {
 					if(sellInfor.getBook().getCover() == null) {
 						sellInfor.getBook().setCover("http://123.57.219.149/Image/0000000000.jpg");
 					} else {
-						sellInfor.getBook().setCover("http://123.57.219.149"+sellInfor.getBook().getCover());
+						if(sellInfor.getBook().getCover().indexOf("http") > -1) {
+						} else {
+							sellInfor.getBook().setCover("http://123.57.219.149"+sellInfor.getBook().getCover());
+						}
+						
 					}
 				}
 			}
@@ -202,7 +209,10 @@ public class InformationController extends AbstractController {
 					if(sellInfor.getBook().getCover() == null) {
 						sellInfor.getBook().setCover("http://123.57.219.149/Image/0000000000.jpg");
 					} else {
-						sellInfor.getBook().setCover("http://123.57.219.149"+sellInfor.getBook().getCover());
+						if(sellInfor.getBook().getCover().indexOf("http") > -1) {
+						} else {
+							sellInfor.getBook().setCover("http://123.57.219.149"+sellInfor.getBook().getCover());
+						}
 					}
 				}
 			}
@@ -214,7 +224,10 @@ public class InformationController extends AbstractController {
 					if(sellInfor.getBook().getCover() == null) {
 						sellInfor.getBook().setCover("http://123.57.219.149/Image/0000000000.jpg");
 					} else {
-						sellInfor.getBook().setCover("http://123.57.219.149"+sellInfor.getBook().getCover());
+						if(sellInfor.getBook().getCover().indexOf("http") > -1) {
+						} else {
+							sellInfor.getBook().setCover("http://123.57.219.149"+sellInfor.getBook().getCover());
+						}
 					}
 				}
 			}

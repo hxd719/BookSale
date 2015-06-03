@@ -58,10 +58,11 @@ public class InformationService {
 		List<BuyInfor> list = null;
 		PagerVO data = null;
 		if(searchKey != null) {
-			String sql ="select b from BuyInfor b , Category c  where  b.deadline > now() and c.id=? and b.name like ? order by b.publishTime desc";
+			String sql ="select b from BuyInfor b  where  b.deadline > now() and b.category.id=? and b.bookName like ? order by b.publishTime desc";
 			data = bdao.findPaginated(sql,new Object[]{categoryId,"%"+searchKey+"%"} ,(pageNum-1)*pageSize, pageSize);
+			list = (List<BuyInfor>) data.getDatas();
 		} else {
-			String sql ="select b from BuyInfor b , Category c where  b.deadline > now() and c.id = ? order by b.publishTime desc";
+			String sql ="select b from BuyInfor b  where  b.deadline > now() and b.category.id = ? order by b.publishTime desc";
 			data = bdao.findPaginated(sql,categoryId, (pageNum-1)*pageSize, pageSize);
 			list = (List<BuyInfor>) data.getDatas();
 		}
@@ -72,10 +73,10 @@ public class InformationService {
 	public List<SellInfor> getSellInfoList(Integer categoryId,Integer pageSize,Integer pageNum,String searchKey) {
 		List<SellInfor> list = null;
 		if(searchKey != null) {
-			String sql ="select b from SellInfor b, Category c  where  b.deadline > now() and c.id=? and b.bookName like ? order by b.publishTime desc";
+			String sql ="select b from SellInfor b  where  b.deadline > now() and b.category.id=? and b.bookName like ? order by b.publishTime desc";
 			list = (List<SellInfor>)(sdao.findPaginated(sql,new Object[]{categoryId,"%"+searchKey+"%"}, (pageNum-1)*pageSize, pageSize).getDatas());
 		} else {
-			String sql ="select b from SellInfor b, Category c  where  b.deadline > now() and c.id=? order by b.publishTime desc";
+			String sql ="select b from SellInfor b  where  b.deadline > now() and b.category.id=? order by b.publishTime desc";
 			list = (List<SellInfor>)(sdao.findPaginated(sql,categoryId ,(pageNum-1)*pageSize, pageSize).getDatas());
 		}
 		return list;
@@ -88,7 +89,7 @@ public class InformationService {
 		List<BuyInfor> list = null;
 		PagerVO data = null;
 		if(bookId != null) {
-			String sql ="select s from BuyInfor s,Book b where  s.deadline > now() and  b.id = ? order by s.publishTime desc";
+			String sql ="select s from BuyInfor s where  s.deadline > now() and  s.book.id = ? order by s.publishTime desc";
 			data = bdao.findPaginated(sql,bookId,0,Integer.MAX_VALUE);
 		} else {
 			String sql ="select s from BuyInfor s  where  s.deadline > now() and  s.bookName like ? order by s.publishTime desc";
@@ -104,10 +105,10 @@ public class InformationService {
 		List<BuyInfor> list = null;
 		PagerVO data = null;
 		if(searchKey != null) {
-			String sql ="select b from BuyInfor b , User u  where  u.id=? and b.name like ? order by b.publishTime desc";
+			String sql ="select b from BuyInfor b  where  b.user.id=? and b.name like ? order by b.publishTime desc";
 			data = bdao.findPaginated(sql,new Object[]{userId,"%"+searchKey+"%"} ,(pageNum-1)*pageSize, pageSize);
 		} else {
-			String sql ="select b from BuyInfor b , User u  where u.id = ? order by b.publishTime desc";
+			String sql ="select b from BuyInfor b  where b.user.id = ? order by b.publishTime desc";
 			data = bdao.findPaginated(sql,userId, (pageNum-1)*pageSize, pageSize);
 			list = (List<BuyInfor>) data.getDatas();
 		}
@@ -118,10 +119,10 @@ public class InformationService {
 	public List<SellInfor> getSellInfoListByUserId(Integer userId,Integer pageSize,Integer pageNum,String searchKey) {
 		List<SellInfor> list = null;
 		if(searchKey != null) {
-			String sql ="select b from SellInfor b, User u   where  u.id=? and b.bookName like ? order by b.publishTime desc";
+			String sql ="select b from SellInfor b  where  b.user.id=? and b.bookName like ? order by b.publishTime desc";
 			list = (List<SellInfor>)(sdao.findPaginated(sql,new Object[]{userId,"%"+searchKey+"%"}, (pageNum-1)*pageSize, pageSize).getDatas());
 		} else {
-			String sql ="select b from SellInfor b, User u   where  u.id=? order by b.publishTime desc";
+			String sql ="select b from SellInfor b  where  b.user.id=? order by b.publishTime desc";
 			list = (List<SellInfor>)(sdao.findPaginated(sql,userId ,(pageNum-1)*pageSize, pageSize).getDatas());
 		}
 		return list;
@@ -235,9 +236,7 @@ public class InformationService {
 	}
 	
 	
-	public void deleteBuyInfor(InformationCommandInfo commandinfo) {
-		BuyInfor info = new BuyInfor();
-		info.setId(commandinfo.id);
+	public void deleteBuyInfor(BuyInfor info) {
 		bdao.del(info);
 	}
 	
@@ -247,9 +246,7 @@ public class InformationService {
 		bdao.del(info);
 	}
 	
-	public void deleteSellInfor(InformationCommandInfo commandinfo) {
-		SellInfor info = new SellInfor();
-		info.setId(commandinfo.id);
+	public void deleteSellInfor(SellInfor info) {
 		sdao.del(info);
 	}
 	
